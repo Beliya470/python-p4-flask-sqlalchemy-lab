@@ -1,5 +1,7 @@
 from os import environ
 import re
+from datetime import datetime
+
 
 from app import app, db
 from server.models import Animal, Enclosure, Zookeeper
@@ -8,10 +10,14 @@ class TestApp:
     '''Flask application in app.py'''
 
     with app.app_context():
-        a_1 = Animal()
-        a_2 = Animal()
-        e = Enclosure()
-        z = Zookeeper()
+        
+        a_1 = Animal(name="Lion", species="Panthera leo")
+        a_2 = Animal(name="Tiger", species="Panthera tigris")
+        
+        # Assigning a value to the `environment` attribute of the Enclosure instance
+        e = Enclosure(environment="Tropical") # replace "Tropical" with any valid environment value for your application
+              
+        z = Zookeeper(name="John Doe", birthday=datetime.strptime("1990-01-01", "%Y-%m-%d").date())
         e.animals = [a_1, a_2]
         z.animals = [a_1, a_2]
         db.session.add_all([a_1, a_2, e, z])
